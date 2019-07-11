@@ -1,1 +1,3 @@
 "desktop-app-bookstore" 
+
+pyinstaller
