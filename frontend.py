@@ -1,19 +1,36 @@
+# Libraries
 import tkinter as tk
+# Back-end script
 import backend
 
-
+# start of the interface
 class Application(tk.Frame):
+
+    # inicial definitions
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
         self.grid()
         self.create_widgets()
+        master.wm_title("BookStore")
 
+    # Start of actions for buttons
     def get_row(self, event):
-        global selected_tuple
-        index = self.listbox.curselection()[0]
-        selected_tuple = self.listbox.get(index)
-        
+        try:
+            global selected_tuple
+            index = self.listbox.curselection()[0]
+            selected_tuple = self.listbox.get(index)
+            self.entryTitle.delete(0, tk.END)
+            self.entryTitle.insert(tk.END, selected_tuple[1])
+            self.entryAuthor.delete(0, tk.END)
+            self.entryAuthor.insert(tk.END, selected_tuple[2])
+            self.entryYear.delete(0, tk.END)
+            self.entryYear.insert(tk.END, selected_tuple[3])
+            self.entryISBN.delete(0, tk.END)
+            self.entryISBN.insert(tk.END, selected_tuple[4])
+        except IndexError:
+            pass
+            
     def view_command(self):
         self.listbox.delete(0,tk.END)
         for row in backend.view():
@@ -33,6 +50,14 @@ class Application(tk.Frame):
         backend.delete(selected_tuple[0])
         self.view_command()
     
+    def update_command(self):
+        line = selected_tuple
+        backend.update(line[0],self.inputTitle.get(),self.inputAuthor.get(),self.inputYear.get(),self.inputISBN.get())
+        self.view_command()
+    
+    # End Actions for Buttons
+    
+    #Interface Widgets
     def create_widgets(self):
         self.labelTitle = tk.Label(self)
         self.labelTitle["text"] = "Title"
@@ -77,7 +102,7 @@ class Application(tk.Frame):
         self.btnEntry["text"] = "Add entry"
         self.btnEntry.grid(row=4,column=4)
         self.btnUpdate = tk.Button(self, width = 12)
-        self.btnUpdate["command"] = ""
+        self.btnUpdate["command"] = self.update_command
         self.btnUpdate["text"] = "Update Selected"
         self.btnUpdate.grid(row=5,column=4)
         self.btnDelete = tk.Button(self, width = 12)
@@ -95,6 +120,7 @@ class Application(tk.Frame):
         self.scrollbar.grid(row=2,column=2,rowspan=6)
         self.listbox.configure(yscrollcommand=self.scrollbar.set)
         self.scrollbar.configure(command=self.listbox.yview)
+        #End of interface Wigets
 
 root = tk.Tk()
 app = Application(master=root)

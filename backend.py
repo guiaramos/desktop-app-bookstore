@@ -1,5 +1,7 @@
+# Libaries
 import sqlite3
 
+# Connections definitions / creating the table
 def connect():
     connection = sqlite3.connect("books.db")
     cursor = connection.cursor()
@@ -7,8 +9,10 @@ def connect():
     connection.commit()
     connection.close()
 
+# Always connect
 connect()
 
+# Interation between the button and the database
 def insert(title,author,year,isbn):
     connection = sqlite3.connect("books.db")
     cursor = connection.cursor()
@@ -50,4 +54,4 @@ def update(id,title,author,year,isbn):
 #insert("The Earth", "John Smith",1925,46414168432)
 #delete(3)
 #update(1,"The Moon","John Tablet",1926,6548432)
-print(view())
+#print(view())
