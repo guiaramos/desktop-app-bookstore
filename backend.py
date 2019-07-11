@@ -47,7 +47,7 @@ def update(id,title,author,year,isbn):
     connection.close()
 
 
-insert("The Earth", "John Smith",1925,46414168432)
+#insert("The Earth", "John Smith",1925,46414168432)
 #delete(3)
 #update(1,"The Moon","John Tablet",1926,6548432)
 print(view())
